@@ -5,13 +5,11 @@ User.delete_all
 
 ### Tasks 
 
-Task.create!(
-  id: 1,
+task1 = Task.create!(
   title: "Comprar leite",
   coins: 2
 )
-Task.create!(
-  id: 2,
+task2 = Task.create!(
   title: "Comprar pao",
   coins: 3
 )
@@ -47,12 +45,12 @@ alveta = User.create!(
 ## Atrbuindo tasks a users
 
 UserTask.create!(
-  task: Task.find(1),
+  task: task1,
   user: murileonsio
 )
 
 UserTask.create!(
-  task: Task.find(2),
+  task: task2,
   user: alveta
 )
 
