@@ -1,10 +1,17 @@
+## Cleaning all entities
+UserTask.delete_all
+Task.delete_all
+User.delete_all
+
 ### Tasks 
 
 Task.create!(
+  id: 1,
   title: "Comprar leite",
   coins: 2
 )
 Task.create!(
+  id: 2,
   title: "Comprar pao",
   coins: 3
 )
@@ -50,3 +57,10 @@ UserTask.create!(
 )
 
 
+## Creating users coins
+
+murileonsio.coins = 2205
+alveta.coins = 1803
+
+murileonsio.save
+alveta.save
