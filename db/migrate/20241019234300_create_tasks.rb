@@ -3,6 +3,7 @@ class CreateTasks < ActiveRecord::Migration[7.1]
     create_table :tasks do |t|
       t.string :title
       t.integer :coins
+      t.references :user
 
       t.timestamps
     end

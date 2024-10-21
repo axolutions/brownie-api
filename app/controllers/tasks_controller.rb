@@ -1,13 +1,13 @@
 class TasksController < ApplicationController
   def index
-    tasks = Task.includes(:users).all
+    tasks = Task.all
 
     render json: tasks.map { |task| 
       {
         id: task.id,
         title: task.title,
         coins: task.coins,
-        user: task.users.first,
+        user: task.user,
         status: task.status
       }
     }
@@ -27,6 +27,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.permit(:status)
+    params.permit(:status, :user_id)
   end
 end
