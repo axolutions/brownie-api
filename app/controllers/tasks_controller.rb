@@ -2,31 +2,48 @@ class TasksController < ApplicationController
   def index
     tasks = Task.all
 
-    render json: tasks.map { |task| 
-      {
-        id: task.id,
-        title: task.title,
-        coins: task.coins,
-        user: task.user,
-        status: task.status
-      }
-    }
+    render json: tasks
   end
 
-
-  def update
-    task = Task.find(params[:id])
-
-    if task.update!(task_params)
+  def create
+    if task.save
       render json: task
     else
-      render status 422, json: {errors: task.errors}
+      render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def show
+    render json: task
+  end
+
+  def update
+    service = UpdateTaskService.new(task, task_params)
+
+    if service.call
+      render json: service.task
+    else
+      render json: { errors: service.task.errors.full_messages }, status: :unprocessable_entity
+    end
+  rescue UpdateTaskStatusService::UpdateTaskStatusError => e
+    render json: { errors: e.message }, status: :unprocessable_entity
+  end
+
+  def destroy
+    if task.delete
+      render head: :no_content
+    else
+      render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   private
 
+  def task
+    Task.find(params[:id])
+  end
+
   def task_params
-    params.permit(:status, :user_id)
+    params.permit(Task.creatable_fields)
   end
 end
