@@ -1,24 +1,37 @@
-# README
+### How to run this project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Install dependencies
 
-Things you may want to cover:
+```bash
+bundle
+```
 
-* Ruby version
+* Prepare docker database
 
-* System dependencies
+```bash
+make db
+```
 
-* Configuration
+Or, if any issues with database:
 
-* Database creation
+```bash
+docker kill my_postgres
+```
 
-* Database initialization
+Then start the docker database again
 
-* How to run the test suite
+```bash
+make db
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+* Init database
 
-* Deployment instructions
+```bash
+rails db:drop db:create db:migrate db:seed
+```
 
-* ...
+* Start the server
+
+```bash
+rails s -p 4000
+```
